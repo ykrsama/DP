@@ -720,7 +720,7 @@ V_118 = Vertex(name = 'V_118',
 V_119 = Vertex(name = 'V_119',
                particles = [ P.nuc__tilde__, P.nuc, P.a ],
                color = [ '1' ],
-               lorentz = [ L.FFV1 ],
+               lorentz = [L.FFV1FF], # [ L.FFV1 ],
                couplings = {(0,0):C.GC_137})
 
 V_120 = Vertex(name = 'V_120',
@@ -744,7 +744,7 @@ V_122 = Vertex(name = 'V_122',
 V_123 = Vertex(name = 'V_123',
                particles = [ P.nuc__tilde__, P.nuc, P.Z ],
                color = [ '1' ],
-               lorentz = [ L.FFV2, L.FFV4 ],
+               lorentz = [L.FFV2FF, L.FFV4FF], # [ L.FFV2, L.FFV4 ],
                couplings = {(0,0):C.GC_139,(0,1):C.GC_138})
 
 V_124 = Vertex(name = 'V_124',

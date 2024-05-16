@@ -96,3 +96,15 @@ VVVV5 = Lorentz(name = 'VVVV5',
                 spins = [ 3, 3, 3, 3 ],
                 structure = 'Metric(1,4)*Metric(2,3) - (Metric(1,3)*Metric(2,4))/2. - (Metric(1,2)*Metric(3,4))/2.')
 
+FFV1 = Lorentz(name = 'FFV1',
+               spins = [ 2, 2, 3 ],
+               structure = 'mymdl_FormFactor(-P(-1,3)**2) * (Gamma(3,2,1))')
+
+FFV2 = Lorentz(name = 'FFV2',
+               spins = [ 2, 2, 3 ],
+               structure = 'mymdl_FormFactor(-P(-1,3)**2) * (Gamma(3,2,-1)*ProjM(-1,1))')
+
+FFV4 = Lorentz(name = 'FFV4',
+               spins = [ 2, 2, 3 ],
+               structure = 'mymdl_FormFactor(-P(-1,3)**2) * (1.*Gamma(3,2,-1)*ProjM(-1,1) + 1.*Gamma(3,2,-1)*ProjP(-1,1))')
+
