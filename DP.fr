@@ -1,0 +1,214 @@
+(************************************************************************)
+(*                                                                      *)
+(*                            DP Model File                             *)
+(*                                                                      *)
+(*     This model contains a Dark gauge force extension of the SM.      *)
+(*                                                                      *)
+(************************************************************************)
+
+(************************************************************************)
+(*                              Information                             *)
+(************************************************************************)
+
+M$ModelName = "DP";
+
+M$Information = {
+  Authors      -> {"Xu-Liang Zhu", "Xiang Chen"},
+  Version      -> "0.2",
+  Date         -> "May 16th 2024",
+  Institutions -> {"Tsung-Dao Lee Institute, Shanghai Jiao Tong University"},
+  Emails       -> {"xuliangz@mail.sdu.edu.cn"},
+  URLs         -> "https://code.ihep.ac.cn/darkshine"
+};
+
+(************************************************************************)
+(*                              Change log                              *)
+(************************************************************************)
+
+(************************************************************************)
+(*                             DP Parameters                            *)
+(************************************************************************)
+
+M$Parameters = {
+
+  (*********************** DP External Parameters  *********************)
+
+  epsi == {
+    ParameterType    -> External,
+    BlockName        -> DPINPUTS,
+    OrderBlock       -> 1,
+    Value            -> 1*^-4,
+    InteractionOrder -> {QED,2},
+    TeX              -> \[Epsilon],
+    Description      -> "Kinetic mixing parameter between hypercharge and dark photon"
+  },
+
+  Rs == {
+    ParameterType -> External,
+    BlockName     -> DPINPUTS,
+    OrderBlock    -> 2,
+    Value         -> 1,
+    ParameterName -> Rs,
+    Description   -> "Energy dependent ratio R(s) = sigma(e+ e- > hadrons,s) / sigma(e+ e- > mu+ mu-, s)"
+  },
+
+  Znuc == {
+    ParameterType -> External,
+    BlockName     -> DPINPUTS,
+    OrderBlock    -> 3,
+    Value         -> 74,
+    TeX           -> Subscript[Z,nuc],
+    Description   -> "Atomic order of Nuclei"
+  },
+
+  Nnuc == {
+    ParameterType -> External,
+    BlockName     -> DPINPUTS,
+    OrderBlock    -> 4,
+    Value         -> 110,
+    TeX           -> Subscript[N,nuc],
+    Description   -> "Neutron order of Nuclei"
+  },
+
+  dnuc == {
+    ParameterType -> External,
+    BlockName     -> DPINPUTS,
+    OrderBlock    -> 5,
+    Value         -> 0.005069502007561487,
+    Description   -> "The second finite nuclear size d = 0.164 * A^-2/3"
+  },
+
+  mpnuc == {
+    ParameterType -> External,
+    BlockName     -> DPINPUTS,
+    OrderBlock    -> 6,
+    Value         -> 0.938,
+    Description   -> "proton mass"
+  },
+
+  mupnuc == {
+    ParameterType -> External,
+    BlockName     -> DPINPUTS,
+    OrderBlock    -> 7,
+    Value         -> 2.79,
+    Description   -> "Proton magnetic moment"
+  },
+
+  (*********************** DP Internal Parameters  *********************)
+
+  Wap == {
+    ParameterType -> Internal,
+    Value         -> 1/(3*137.035999) epsi^2 Map (
+                         If[Map > 2 Me, (1 + 2 Me^2/Map^2) Sqrt[1 - 4 Me^2/Map^2], 0]
+                       + If[Map > 2 MMU, (1 + 2 MMU^2/Map^2) Sqrt[1 - 4 MMU^2/Map^2] * (1 + Rs), 0]
+                     ),
+    ParameterName -> Wap,
+    Description   -> "Width of dark photon"
+  },
+
+  anuc == {
+    ParameterType -> Internal,
+    Value         -> 111 * Znuc^(-1/3) / Me,
+    Description   -> "Nuclear parameter a = 51739.8 "
+  },
+
+  apnuc == {
+    ParameterType -> Internal,
+    Value         -> 773 * Znuc^(-2/3) / Me,
+    Description   -> "Nuclear parameter ap = 85823.1"
+  },
+
+  CppzL == {
+    ParameterType -> Internal,
+    Definitions   -> {CppzL->(0.5 - sw^2)},
+    TeX           -> Superscript[Subscript[C,ppz],L],
+    Description   -> "Z Coupling to protons left handed"
+  },
+
+  CppzR == {
+    ParameterType -> Internal,
+    Definitions   -> {CppzR->-sw^2},
+    TeX           -> Superscript[Subscript[C,ppz],R],
+    Description   -> "Z Coupling to protons right handed"
+  },
+
+  CnnzL == {
+    ParameterType -> Internal,
+    Definitions   -> {CnnzL->-0.5},
+    TeX           -> Superscript[Subscript[C,nnz],R],
+    Description   -> "Z Coupling to neutrons left handed"
+  }
+
+};
+
+(************************************************************************)
+(*                            DP Fields                                 *)
+(************************************************************************)
+
+M$ClassesDescription = {
+  V[101] == {
+    ClassName        -> Ap,
+    SelfConjugate    -> True,
+    Mass             -> {Map, 1},
+    Width            -> {Wap, Internal},
+    ParticleName     -> "ap",
+    PDG              -> 500022,
+    PropagatorLabel  -> "A'",
+    PropagatorType   -> W,
+    PropagatorArrow  -> None,
+    FullName         -> "DarkPhoton"
+  },
+
+  F[101] == {
+    ClassName        -> NUC,
+    SelfConjugate    -> False,
+    Mass             -> {MNUC, 184.0},
+    Width            -> 0,
+    ParticleName     -> "nuc",
+    AntiParticleName -> "nuc~",
+    QuantumNumbers   -> {Q -> 1},
+    PDG              -> 500023,
+    PropagatorLabel  -> "nuc",
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    FullName         -> "Nuclei"
+  },
+
+  F[102] == {
+    ClassName        -> chi,
+    SelfConjugate    -> False,
+    Mass             -> {Mchi, 1.0},
+    Width            -> 0,
+    ParticleName     -> "chi",
+    AntiParticleName -> "chi~",
+    (*QuantumNumbers   -> {Q -> 0},*)
+    PDG              -> 500024,
+    PropagatorLabel  -> "chi",
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    FullName         -> "DarkMatter"
+  }
+
+};
+
+(************************************************************************)
+(*                            DP Lagrangian                             *)
+(************************************************************************)
+
+(*************************** Nucleus-photon/Z ***************************)
+
+LnucA := ee Znuc A[mu] (NUCbar.Ga[mu].ProjM.NUC + NUCbar.Ga[mu].ProjP.NUC);
+
+LnucZ := g1 Z[mu] (Znuc CppzL NUCbar.Ga[mu].ProjM.NUC + Znuc CppzR NUCbar.Ga[mu].ProjP.NUC + Nnuc CppzL NUCbar.Ga[mu].ProjM.NUC);
+
+(***************** Dark Photon Kinetic Mixing Lagrangian ****************)
+(***************** ref:arxiv:1209.6083v2                 ****************)
+
+LAp := - epsi/2 FS[B,mu,nu] FS[Ap,mu,nu] - 1/4 FS[Ap,mu,nu] FS[Ap,mu,nu] + Map^2/2 Ap[mu] Ap[mu] \
+                 + (-1)   epsi ee Ap[mu] (lbar.Ga[mu].ProjP.l   + lbar.Ga[mu].ProjM.l  ) \
+                 + (-1/3) epsi ee Ap[mu] (dqbar.Ga[mu].ProjP.dq + dqbar.Ga[mu].ProjM.dq) \
+                 + (2/3)  epsi ee Ap[mu] (uqbar.Ga[mu].ProjP.uq + uqbar.Ga[mu].ProjM.uq);
+
+(************************* Total DP Lagrangian  *************************)
+
+LDP := LnucA + LnucZ + LAp;
