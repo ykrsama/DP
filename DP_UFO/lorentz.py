@@ -1,6 +1,6 @@
 # This file was automatically created by FeynRules 2.3.49
 # Mathematica version: 12.3.1 for Mac OS X ARM (64-bit) (July 24, 2021)
-# Date: Thu 16 May 2024 16:55:08
+# Date: Thu 16 May 2024 19:19:35
 
 
 from object_library import all_lorentz, Lorentz
@@ -96,15 +96,15 @@ VVVV5 = Lorentz(name = 'VVVV5',
                 spins = [ 3, 3, 3, 3 ],
                 structure = 'Metric(1,4)*Metric(2,3) - (Metric(1,3)*Metric(2,4))/2. - (Metric(1,2)*Metric(3,4))/2.')
 
-FFV1 = Lorentz(name = 'FFV1',
+FFV1FF = Lorentz(name = 'FFV1FF',
                spins = [ 2, 2, 3 ],
                structure = 'mymdl_FormFactor(-P(-1,3)**2) * (Gamma(3,2,1))')
 
-FFV2 = Lorentz(name = 'FFV2',
+FFV2FF = Lorentz(name = 'FFV2FF',
                spins = [ 2, 2, 3 ],
                structure = 'mymdl_FormFactor(-P(-1,3)**2) * (Gamma(3,2,-1)*ProjM(-1,1))')
 
-FFV4 = Lorentz(name = 'FFV4',
+FFV4FF = Lorentz(name = 'FFV4FF',
                spins = [ 2, 2, 3 ],
                structure = 'mymdl_FormFactor(-P(-1,3)**2) * (1.*Gamma(3,2,-1)*ProjM(-1,1) + 1.*Gamma(3,2,-1)*ProjP(-1,1))')
 

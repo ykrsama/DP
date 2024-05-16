@@ -59,15 +59,15 @@ if __name__ == "__main__":
         lorentz_lines = f.readlines()
 
     for particle, formfactor in vtx_particle_ff_map.items():
-        print(f'Finding {particle}')
+        print(f'{COLOUR["OKBLUE"]}Finding {particle}')
         for i, line in enumerate(vertices_lines):
             if particle in line:
                 # get the next line containing "lorentz = ["
                 for j in range(i, len(vertices_lines)):
                     if "lorentz = [" in vertices_lines[j]:
                         vtx_names_origin = vertices_lines[j].strip('lorentz = [],\n').split(', ')
-                        print('vtx_names_origin:')
-                        print(vtx_names_origin)
+                        #print('vtx_names_origin:')
+                        #print(vtx_names_origin)
                         # get the updated vertex name
                         vtx_names_new = [name + 'FF' for name in vtx_names_origin]
                         # replace the line with new vertex name
@@ -81,7 +81,7 @@ if __name__ == "__main__":
                     for j, line in enumerate(lorentz_lines):
                         if f'{lorentz_name_origin} = Lorentz(' in line:
                             lines_new_lorentz = [lorentz_lines[j]]
-                            lines_new_lorentz[0].replace(lorentz_name_origin, lorentz_name_new)
+                            lines_new_lorentz[0] = lines_new_lorentz[0].replace(lorentz_name_origin, lorentz_name_new)
                             for k in range(j+1, len(lorentz_lines)):
                                 cur_line=lorentz_lines[k]
                                 if 'structure = ' in cur_line:
@@ -91,7 +91,7 @@ if __name__ == "__main__":
                                     break
                                 else:
                                     lines_new_lorentz.append(cur_line)
-                            print('lines_new_lorentz:\n', lines_new_lorentz)
+                            print(f'{COLOUR["OKGREEN"]}lines_new_lorentz:\n', lines_new_lorentz)
                             break
 
                     # open ufo_dir/lorentz.py in append mode

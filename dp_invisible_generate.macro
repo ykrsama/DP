@@ -1,0 +1,3 @@
+import model ./DP_UFO
+generate e- nuc > e- ap nuc
+output run/enuc_eapnuc
